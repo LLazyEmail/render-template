@@ -18,7 +18,7 @@ function makeTemplate(overrides: Partial<Template<Props>> = {}): Template<Props>
         render: () => `<p>Welcome aboard.</p>`,
       },
     ],
-    compose: (rendered) => rendered.greeting + rendered.body,
+    compose: (rendered) => (rendered.greeting ?? '') + (rendered.body ?? ''),
     ...overrides,
   };
 }
