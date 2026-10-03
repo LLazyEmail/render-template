@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { renderTemplate, type Template } from '../src';
+import { renderTemplate, RenderError, type Template } from '../src';
 
 interface Props {
   name: string;
@@ -105,21 +105,35 @@ describe('renderTemplate', () => {
     expect(a.parts).not.toBe(b.parts);
   });
 
-  it('throws a TypeError when a part returns a non-string', () => {
+  it('wraps a non-string part return in RenderError', () => {
     const template = makeTemplate({
       parts: [{ id: 'bad', render: () => 42 as unknown as string }],
       compose: () => '',
     });
 
-    expect(() => renderTemplate(template, { name: 'Ada' })).toThrow(TypeError);
+    expect(() => renderTemplate(template, { name: 'Ada' })).toThrow(RenderError);
+    try {
+      renderTemplate(template, { name: 'Ada' });
+    } catch (error) {
+      expect(error).toBeInstanceOf(RenderError);
+      expect((error as RenderError).partId).toBe('bad');
+      expect((error as RenderError).cause).toBeInstanceOf(TypeError);
+    }
   });
 
-  it('throws a TypeError when compose returns a non-string', () => {
+  it('wraps a non-string compose return in RenderError', () => {
     const template = makeTemplate({
       compose: () => 42 as unknown as string,
     });
 
-    expect(() => renderTemplate(template, { name: 'Ada' })).toThrow(TypeError);
+    expect(() => renderTemplate(template, { name: 'Ada' })).toThrow(RenderError);
+    try {
+      renderTemplate(template, { name: 'Ada' });
+    } catch (error) {
+      expect(error).toBeInstanceOf(RenderError);
+      expect((error as RenderError).partId).toBe('compose');
+      expect((error as RenderError).cause).toBeInstanceOf(TypeError);
+    }
   });
 
   it('does not mutate the template parts array', () => {
