@@ -1,9 +1,8 @@
 name: Publish to GitHub Packages
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       dry-run:
@@ -23,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -41,8 +42,8 @@ jobs:
       - name: Test
         run: npm test
 
-      - name: Build
-        run: npm run build
+      - name: Prepare
+        run: npm run prepare
 
       - name: Verify dist exists
         run: |
@@ -50,9 +51,13 @@ jobs:
           test -f dist/index.cjs
           test -f dist/index.d.ts
 
-      # Tag pushes always publish. Manual runs publish unless dry-run is checked.
+      - name: Set version from release tag
+        if: github.event_name == 'release'
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+
+      # A published release always publishes. Manual runs publish unless dry-run is checked.
       - name: Publish to GitHub Packages
-        if: github.event_name == 'push' || inputs.dry-run == false
+        if: github.event_name == 'release' || inputs.dry-run == false
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
