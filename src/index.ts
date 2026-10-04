@@ -1,5 +1,9 @@
-export { renderTemplate } from './renderTemplate';
+export { renderTemplate, finish } from './renderTemplate';
 export { RenderError } from './errors';
+export { assertTemplate } from './validation';
+export { createContext } from './context';
+export { normalizeHtml } from './html';
+export { okTrace, describeError, skippedTrace, publish } from './trace';
 
 export type {
   ErrorMode,
