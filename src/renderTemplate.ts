@@ -65,7 +65,7 @@ export function renderTemplate<TProps>(
   return finish(template, ctx, rendered, trace, ok, onError);
 }
 
-function finish<TProps>(
+export function finish<TProps>(
   template: Template<TProps>,
   ctx: RenderContext<TProps>,
   rendered: Record<string, string>,
