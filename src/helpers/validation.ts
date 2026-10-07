@@ -1,5 +1,5 @@
-import { RenderError } from './errors';
-import type { Template, TemplatePart } from './types';
+import { RenderError } from '../errors';
+import type { Template, TemplatePart } from '../types';
 
 export const RESERVED_PART_ID = 'compose';
 

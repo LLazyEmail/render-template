@@ -1,4 +1,4 @@
-import type { RenderContext, SlotValue } from './types';
+import type { RenderContext, SlotValue } from '../types';
 
 export function createContext<TProps>(
   templateId: string,

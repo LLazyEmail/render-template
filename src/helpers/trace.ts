@@ -1,4 +1,4 @@
-import type { PartFailure, PartTrace } from './types';
+import type { PartFailure, PartTrace } from '../types';
 
 export function okTrace(id: string, html: string, ms: number): PartTrace {
   return {
