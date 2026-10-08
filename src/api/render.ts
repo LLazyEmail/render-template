@@ -1,7 +1,7 @@
-import { createContext } from './helpers/context';
-import { RenderError } from './errors';
-import { normalizeHtml } from './helpers/html';
-import { describeError, okTrace, publish, skippedTrace } from './helpers/trace';
+import { createContext } from '../helpers/context';
+import { RenderError } from '../errors';
+import { normalizeHtml } from '../helpers/html';
+import { describeError, okTrace, publish, skippedTrace } from '../helpers/trace';
 import type {
   ErrorMode,
   PartFailure,
@@ -11,8 +11,8 @@ import type {
   RenderResult,
   Template,
   TemplatePart,
-} from './types';
-import { RESERVED_PART_ID, assertTemplate } from './helpers/validation';
+} from '../types';
+import { RESERVED_PART_ID, assertTemplate } from '../helpers/validation';
 
 /**
  * Render one template. The same template and props produce the same HTML.

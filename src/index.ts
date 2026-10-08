@@ -1,4 +1,5 @@
-export { renderTemplate, finish } from './renderTemplate';
+export { renderTemplate, finish, renderMany } from './api';
+export type { RenderJob, RenderOptions } from './api';
 export { RenderError } from './errors';
 export { assertTemplate } from './helpers/validation';
 export { createContext } from './helpers/context';
@@ -13,8 +14,6 @@ export type {
   PartStatus,
   PartTrace,
   RenderContext,
-  RenderJob,
-  RenderOptions,
   RenderResult,
   SlotValue,
   Template,

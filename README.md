@@ -22,7 +22,7 @@ pnpm add @llazyemail/render-template
 ## Usage
 
 ```ts
-import { renderTemplate, type Template } from '@llazyemail/render-template';
+import { renderMany, renderTemplate, type RenderJob, type Template } from '@llazyemail/render-template';
 
 interface Props {
   name: string;
@@ -41,6 +41,9 @@ const result = renderTemplate(welcome, { name: 'Ada' });
 
 console.log(result.html);
 // <h1>Hello, Ada</h1><p>Welcome aboard.</p>
+
+const jobs: RenderJob<Props>[] = [{ template: welcome, props: { name: 'Ada' } }];
+const batch = renderMany(jobs, { onError: 'collect' });
 ```
 
 ## Error modes
@@ -58,17 +61,21 @@ if (!result.ok) {
 }
 ```
 
+`renderMany` uses the same `RenderOptions.onError`. `throw` skips later jobs.
+`collect` records the failure and continues.
+
 ## Types
 
 All public types are re-exported from the package root:
 `Template`, `TemplatePart`, `RenderContext`, `RenderOptions`, `RenderResult`,
 `PartTrace`, `PartFailure`, `SlotValue`, `RenderJob`, `ErrorMode`, `PartStatus`.
 
+`renderTemplate` and `renderMany` live in `src/api`.
+
 ## Related packages
 
-- `template-runtime-display` — the template model (`defineTemplate`, `slot`,
-  `hasSlot`, `renderMany`) and the `RenderJob`/`RenderOptions` types that this
-  package consumes.
+- `template-runtime-display` — email shell helpers (`defineEmailTemplate`,
+  `renderEmail`) on top of this runtime.
 
 ## License
 
@@ -84,14 +91,15 @@ render-template/
 ├── src/
 │   ├── index.ts
 │   ├── errors.ts
-│   ├── renderTemplate.ts
-│   ├── context.ts
-│   ├── validation.ts
-│   ├── html.ts
-│   ├── trace.ts
+│   ├── api/
+│   │   ├── index.ts
+│   │   ├── render.ts
+│   │   └── renderMany.ts
+│   ├── helpers/
 │   └── types.ts
 └── test/
     ├── renderTemplate.test.ts
+    ├── renderMany.test.ts
     ├── errors.test.ts
     ├── validation.test.ts
     └── trace.test.ts
