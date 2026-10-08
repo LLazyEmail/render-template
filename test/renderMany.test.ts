@@ -78,7 +78,8 @@ describe('renderMany', () => {
         id: 'a',
         render: (ctx) => {
           seen.push(ctx.props);
-          return ctx.slots.note ?? '';
+          const note = ctx.slots.note;
+          return typeof note === 'string' ? note : '';
         },
       },
     ]);
