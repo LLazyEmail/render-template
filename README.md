@@ -10,6 +10,11 @@ returns the final HTML.
   optional `error`.
 - **Two error modes** — fail fast (`'throw'`) or collect-and-continue
   (`'collect'`).
+- **String parts only** — each part must return a string. Lit `TemplateResult`s,
+  Promises, or other non-strings are errors. Convert Lit output to a string
+  before it reaches a part.
+
+Working on this repo with an AI agent? Start at [AGENTS.md](./AGENTS.md).
 
 ## Install
 
@@ -76,6 +81,9 @@ All public types are re-exported from the package root:
 
 - `template-runtime-display` — email shell helpers (`defineEmailTemplate`,
   `renderEmail`) on top of this runtime.
+- `generate-template` — catalog, payload resolution, and disk writes. Consumers
+  should inject their render functions into `createGenerator` rather than
+  reimplementing generation logic.
 
 ## License
 
