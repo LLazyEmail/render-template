@@ -1,7 +1,7 @@
 name: Sandbox HTML
 
 # Separate from build.yml. Install, index, artifact, and the pull-request
-# comment come from LLazyEmail/email-template-workflows@v1.
+# comment come from LLazyEmail/email-template-workflows@v2.0.0.
 # npm run sandbox builds via prepare, then writes sandbox/generated/*.html.
 
 on:
@@ -26,9 +26,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: LLazyEmail/email-template-workflows@v1
+      - uses: LLazyEmail/email-template-workflows@v2.0.0
         with:
           working-directory: .
+          package-manager: npm
           command: npm run sandbox
           artifact-directory: sandbox/generated
           artifact-name: sandbox-html
+          job-summary: true
