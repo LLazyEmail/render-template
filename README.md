@@ -18,6 +18,15 @@ Working on this repo with an AI agent? Start at [AGENTS.md](./AGENTS.md).
 
 ## Install
 
+Published to GitHub Packages, not npmjs. Point the scope at it first, with a
+token that has `read:packages`:
+
+```ini
+# .npmrc
+@llazyemail:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
 ```sh
 npm install @llazyemail/render-template
 # or
