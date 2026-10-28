@@ -40,7 +40,7 @@
     "prepublishOnly": "npm run typecheck && npm run test && npm run build"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.0.0",
     "@vitest/coverage-v8": "^5.0.3",
     "tsup": "^9.0.0",
     "typescript": "^7.0.0",
