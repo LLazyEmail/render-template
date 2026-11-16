@@ -30,7 +30,7 @@ Node >= 22 (`engines.node`). CI runs on Node **22 and 24** (`.github/workflows/b
 
 - `tsconfig` keeps `strict` and `noUncheckedIndexedAccess` on. Do not turn them off.
 - Coverage thresholds live in `vitest.config.ts` (lines/functions/statements 95, branches 90). Do not lower them. Prefer adding tests over excluding source.
-- Run `npm run test:coverage` before handing back changes under `src/`.
+- Run `npm run test:coverage` before handing back changes under `src/`. CI (`build.yml`) runs the same command, so a drop under the thresholds fails the PR.
 
 ## Layout
 
