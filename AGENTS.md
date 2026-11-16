@@ -34,7 +34,7 @@ Node >= 22 (`engines.node`). CI runs on Node **22 and 24** (`.github/workflows/b
 
 ## Layout
 
-See README.md for the tree. Public surface is `src/index.ts`.
+See the **Layout** section in README.md for the tree. Public surface is `src/index.ts`; README documents every export (main API, slots, trace rows, lower-level helpers).
 
 Do not add Lit as a dependency. Do not add I/O. Keep the package free of template catalogs.
 
