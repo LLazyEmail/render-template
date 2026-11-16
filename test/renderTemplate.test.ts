@@ -319,6 +319,7 @@ describe('slot', () => {
       blankFn: () => '',
       nilFn: () => undefined,
       bad: 1 as unknown as string,
+      nil: null as unknown as string,
       num: () => 2 as unknown as string,
     }),
   };
@@ -340,6 +341,7 @@ describe('slot', () => {
 
   it('rejects a non-string slot and a function that returns a non-string', () => {
     expect(() => slot(ctx, 'bad')).toThrow(/slot "bad" is number/);
+    expect(() => slot(ctx, 'nil')).toThrow(/slot "nil" is null/);
     expect(() => slot(ctx, 'num')).toThrow(/slot "num" returned number/);
   });
 });

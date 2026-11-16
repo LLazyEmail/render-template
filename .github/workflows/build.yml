@@ -38,8 +38,10 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Test
-        run: npm test
+      # test:coverage runs the same suite and fails the job when coverage drops
+      # under the thresholds in vitest.config.ts (95/95/90/95).
+      - name: Test (with coverage thresholds)
+        run: npm run test:coverage
 
       - name: Build
         run: npm run build
