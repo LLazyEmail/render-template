@@ -196,6 +196,16 @@ test/                     Vitest suites (coverage thresholds in vitest.config.ts
 sandbox/example.mjs       renders sandbox/generated/*.html for the Sandbox HTML workflow
 ```
 
+## CI / GitHub Actions
+
+| Workflow | File | Runs on | What it does |
+| --- | --- | --- | --- |
+| Build | `build.yml` | Push and PRs to `main` | On Node 22 and 24: `npm ci`, `npm run typecheck`, `npm run test:coverage` (fails under the thresholds in `vitest.config.ts`: 95% statements/lines/functions, 90% branches), `npm run build`, then checks every `dist/` entry point exists and uploads `dist/` as an artifact. |
+| Sandbox HTML | `sandbox.yml` | PRs, push to `main`, manual | Runs `npm run sandbox` (`sandbox/example.mjs`) through [email-template-workflows](https://github.com/LLazyEmail/email-template-workflows) and uploads the rendered HTML as the `sandbox-html` artifact. On PRs it also posts a comment with the file list and sizes, and the run summary shows the same table. |
+| Publish to GitHub Packages | `publish.yml` | A published GitHub release, or manual | Typecheck, test and build, set the package version from the release tag (`v1.2.3` → `1.2.3`), then `npm publish` to GitHub Packages with the built-in `GITHUB_TOKEN`. A manual run publishes the version already in `package.json`, or only runs `npm publish --dry-run` when **dry-run** is checked. |
+
+There are no scheduled jobs or report issues in this repo.
+
 ## License
 
 MIT
