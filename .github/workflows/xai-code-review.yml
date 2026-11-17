@@ -1,0 +1,29 @@
+name: xAI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: xai-code-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review
+    runs-on: ubuntu-latest
+    # Skip drafts, bot PRs (Renovate/Dependabot) and forks (secrets unavailable there)
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.user.type != 'Bot' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: Code Review
+        uses: tarmojussila/xai-code-review@d86fe10ac75980e564824bbe76648b7d6e0f44c5 # v0.1.1
+        with:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          MAX_DIFF_CHARS: "100000"
